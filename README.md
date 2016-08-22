@@ -1,2 +1,2 @@
 # go
-go practice
+golkorea go 연습용 git
