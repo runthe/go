@@ -12,22 +12,22 @@ package main
 
 import "fmt"
 
-	// 이 함수에서 (int, int) 는 두개의 int형을 리턴한다는 것을 의미합니다. 
+// 이 함수에서 (int, int) 는 두개의 int형을 리턴한다는 것을 의미합니다.
 func vals() (int, int) {
-    return 3, 7
+	return 3, 7
 }
 
 func main() {
 
-    //여기, 다중리턴호출로부터 두개의 다른 값을 받아봅니다. 
-    a, b := vals()
-    fmt.Println(a)
-    fmt.Println(b)
+	//여기, 다중리턴호출로부터 두개의 다른 값을 받아봅니다.
+	a, b := vals()
+	fmt.Println(a)
+	fmt.Println(b)
 
-    
-    //만약 다중리턴 에서 필요하지 않은게 있으면 그것은 _ 로 처리하면 된다. 
-    _, c := vals()
-    fmt.Println(c)
+
+	//만약 다중리턴 에서 필요하지 않은게 있으면 그것은 _ 로 처리하면 된다.
+	_, c := vals()
+	fmt.Println(c)
 }
 
 // todo: named return parameters

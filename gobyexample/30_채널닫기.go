@@ -19,10 +19,6 @@ func main() {
 	jobs := make(chan int, 5)
 	done := make(chan bool)
 
-	//여기예 worker고루틴이 있다. 이것은 반복적으로 jobs로부터 j를, more는 jobs를 수신한다.
-	// 이 특별할 2개의 값수신을 하면서 모든 작업을 완료되어 jobs가 close됬을 때
-	//more의 값은 false가 될 것이다.
-	//우리는 우리의 모든 작업을 했을 때, done'채널에 이것을 알리기 위해 이것을 사용한다.
 	go func() {
 		for {
 			j, more := <-jobs
@@ -36,15 +32,12 @@ func main() {
 		}
 	}()
 
-	// 이것은 세개의 jobs를 jobs채널을 이용하여 worker에게 전송하고 jobs채널을 닫는다.
 	for j := 1; j <= 3; j++ {
 		jobs <- j
-		fmt.Println("sent job", j)
+		fmt.Println("send job", j)
 	}
 	close(jobs)
 	fmt.Println("sent all jobs")
 
-	//worker가 이전에 본 [synchronization](channel-synchronization)접근을 이용하여
-	//기다리는 것을 볼 수 있다.
 	<-done
 }
