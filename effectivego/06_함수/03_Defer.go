@@ -1,3 +1,7 @@
+package main
+
+import "fmt"
+
 /*Defer
 원글 링크 : https://code.google.com/p/golang-korea/wiki/EffectiveGo
 Go 언어에서 defer 문은 함수가 지연된 리턴값을 실행하기 전에 즉시 실행될 수 있도록 
@@ -8,25 +12,25 @@ Go 언어에서 defer 문은 함수가 지연된 리턴값을 실행하기 전�
 // Contents returns the file's contents as a string.
 */
 func Contents(filename string) (string, os.Error) {
-    f, err := os.Open(filename, os.O_RDONLY, 0)
-    if err != nil {
-        return "", err
-    }
-    defer f.Close()  // f.Close()는 현재의 함수가 종료되면 실행되어 질 것입니다.
+f, err := os.Open(filename, os.O_RDONLY, 0)
+if err != nil {
+return "", err
+}
+defer f.Close()  // f.Close()는 현재의 함수가 종료되면 실행되어 질 것입니다.
 
-    var result []byte
-    buf := make([]byte, 100)
-    for {
-        n, err := f.Read(buf[0:])
-        result = append(result, buf[0:n]...) // append와 관련해서는 추후에 다루게 될 것입니다.
-        if err != nil {
-            if err == os.EOF {
-                break
-            }
-            return "", err  // 여기서 리턴한다면 f는 닫히게 될 것입니다.
-        }
-    }
-    return string(result), nil // 여기서 리턴한다면 f는 닫히게 될 것입니다.
+var result []byte
+buf := make([]byte, 100)
+for {
+n, err := f.Read(buf[0:])
+result = append(result, buf[0:n]...) // append와 관련해서는 추후에 다루게 될 것입니다.
+if err != nil {
+if err == os.EOF {
+break
+}
+return "", err  // 여기서 리턴한다면 f는 닫히게 될 것입니다.
+}
+}
+return string(result), nil // 여기서 리턴한다면 f는 닫히게 될 것입니다.
 }
 /*
 Close와 같은 함수에서 지연 호출은 2가지 장점이 있습니다. 
@@ -43,7 +47,7 @@ defer문이 실행되어 질 때 평가되어 집니다.
 여기 아주 쉬운 예가 있습니다.
 */
 for i := 0; i < 5; i++ {
-    defer fmt.Printf("%d ", i)
+defer fmt.Printf("%d ", i)
 }
 
 /*
@@ -58,36 +62,36 @@ func untrace(s string) { fmt.Println("leaving:", s) }
 
 // Use them like this:
 func a() {
-    trace("a")
-    defer untrace("a")
-    // do something....
+trace("a")
+defer untrace("a")
+// do something....
 }
 /*
 우리는 지연된 함수에서 인자값들이 defer문이 실행되어질 때 평가되어진다는 사실을 이용해서 
 더 좋은 결과를 얻을 수 있습니다. 경로 추적은 루틴에 인자값을 정함으로서 할 수 있습니다.
 */
 func trace(s string) string {
-    fmt.Println("entering:", s)
-    return s
+fmt.Println("entering:", s)
+return s
 }
 
 func un(s string) {
-    fmt.Println("leaving:", s)
+fmt.Println("leaving:", s)
 }
 
 func a() {
-    defer un(trace("a"))
-    fmt.Println("in a")
+defer un(trace("a"))
+fmt.Println("in a")
 }
 
 func b() {
-    defer un(trace("b"))
-    fmt.Println("in b")
-    a()
+defer un(trace("b"))
+fmt.Println("in b")
+a()
 }
 
 func main() {
-    b()
+b()
 }
 /*
 prints
