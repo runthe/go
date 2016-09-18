@@ -9,7 +9,7 @@ func main() {
 
 	//숫자와 소수들
 	fmt.Println("1+1 =", 1 + 1)
-	fmt.Println("7.0/3.0 =", 7.0/3.0)
+	fmt.Println(\"7.0/3.0 =", 7.0/3.0)
 
 	//참거짓 연산들
 	fmt.Println(true && false)
